@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowgroup/1.1.2/css/rowGroup.dataTables.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowgroup/1.1.2/css/rowGroup.bootstrap4.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.css">
+	<style>
+		/* Move the search box to the left */
+		.dataTables_filter {
+			float: left !important;
+			padding-left: 10px;
+			padding-top: 10px;
+		}
+
+		/* Datatable should take up entire width */
+		.table {
+			width:100% !important;
+		}
+
+		/* Datatable column */
+		.scannerSeverity {
+			width: 10px;
+			text-align: center;
+		}
+
+		/* Datatable column. Right justify numerics. */
+		.scannerLocation {
+			text-align: right;
+		}
+
+		.summaryChartCell {
+			background-color:white;
+		}
+
+		.summaryChartContainer {
+			padding-left:10%;
+			padding-right:10%;
+			width:100%;
+			background-color:white
+		}
+
+ 		h1, h4 {
+			text-align: center;
+		}
+
+		#footer {
+		    padding-top: 10px;
+		    padding-bottom: 10px;
+			background-color: #e0e0e0;
+			font-size: 1.5em;
+			text-align: center;
+		}
+
+		#reportTitle {
+			margin: 25px;
+		}
+
+		#summaryFiles {
+			margin-top: 25px;
+		}
+	</style>
+	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript" language="javascript"
+		src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+	<script type="text/javascript" class="init">
+
+	// BEGIN - Placeholders filled in by the scanner
+	const violations = [{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"AvoidGlobalModifier","category":"Best Practices","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_bestpractices.html#avoidglobalmodifier","message":"\nAvoid using global modifier\n","line":1,"column":26,"endLine":381,"endColumn":2},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":1,"column":26,"endLine":381,"endColumn":2},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"CognitiveComplexity","category":"Design","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_design.html#cognitivecomplexity","message":"\nThe class 'SystemDatabase' has a total cognitive complexity of 2701 (highest 1), current threshold is 50\n","line":1,"column":26,"endLine":381,"endColumn":2},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"CyclomaticComplexity","category":"Design","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_design.html#cyclomaticcomplexity","message":"\nThe class 'SystemDatabase' has a total cyclomatic complexity of 125 (highest 1).\n","line":1,"column":26,"endLine":381,"endColumn":2},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":2,"column":19,"endLine":4,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":5,"column":19,"endLine":7,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":8,"column":19,"endLine":10,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":11,"column":19,"endLine":13,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":14,"column":19,"endLine":16,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":17,"column":19,"endLine":19,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":20,"column":19,"endLine":22,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":23,"column":19,"endLine":25,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":26,"column":19,"endLine":28,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":29,"column":19,"endLine":31,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":32,"column":19,"endLine":34,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":35,"column":19,"endLine":37,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":38,"column":19,"endLine":40,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":41,"column":19,"endLine":43,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":44,"column":19,"endLine":46,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":47,"column":19,"endLine":49,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":50,"column":19,"endLine":52,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":53,"column":19,"endLine":55,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":56,"column":19,"endLine":58,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":59,"column":19,"endLine":61,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":62,"column":19,"endLine":64,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":65,"column":19,"endLine":67,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":68,"column":19,"endLine":70,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":71,"column":19,"endLine":73,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":74,"column":19,"endLine":76,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":77,"column":19,"endLine":79,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":80,"column":19,"endLine":82,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":83,"column":19,"endLine":85,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":86,"column":19,"endLine":88,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":89,"column":19,"endLine":91,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":92,"column":19,"endLine":94,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":95,"column":19,"endLine":97,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":98,"column":19,"endLine":100,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":101,"column":19,"endLine":103,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":104,"column":19,"endLine":106,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":107,"column":19,"endLine":109,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":110,"column":19,"endLine":112,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":113,"column":19,"endLine":115,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":116,"column":19,"endLine":118,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":119,"column":19,"endLine":121,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":122,"column":19,"endLine":124,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":125,"column":19,"endLine":127,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":128,"column":19,"endLine":130,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":131,"column":19,"endLine":133,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":134,"column":19,"endLine":136,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":137,"column":19,"endLine":139,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":144,"column":19,"endLine":146,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":147,"column":19,"endLine":149,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":150,"column":19,"endLine":152,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":153,"column":19,"endLine":155,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":156,"column":19,"endLine":158,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":159,"column":19,"endLine":161,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":162,"column":19,"endLine":164,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":165,"column":19,"endLine":167,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":168,"column":19,"endLine":170,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":171,"column":19,"endLine":173,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":174,"column":19,"endLine":176,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":177,"column":19,"endLine":179,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":180,"column":19,"endLine":182,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":183,"column":19,"endLine":185,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":186,"column":19,"endLine":188,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":189,"column":19,"endLine":191,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":192,"column":19,"endLine":194,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":195,"column":19,"endLine":197,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":198,"column":19,"endLine":200,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":201,"column":19,"endLine":203,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":204,"column":19,"endLine":206,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":207,"column":19,"endLine":209,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":210,"column":19,"endLine":212,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":213,"column":19,"endLine":215,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":216,"column":19,"endLine":218,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":219,"column":19,"endLine":221,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":222,"column":19,"endLine":224,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":225,"column":19,"endLine":227,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":228,"column":19,"endLine":230,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":231,"column":19,"endLine":233,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":234,"column":19,"endLine":236,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":237,"column":19,"endLine":239,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":240,"column":19,"endLine":242,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":243,"column":19,"endLine":245,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":246,"column":19,"endLine":248,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":249,"column":19,"endLine":251,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":252,"column":19,"endLine":254,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ExcessiveParameterList","category":"Design","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_design.html#excessiveparameterlist","message":"\nAvoid long parameter lists.\n","line":255,"column":19,"endLine":257,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":255,"column":19,"endLine":257,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ExcessiveParameterList","category":"Design","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_design.html#excessiveparameterlist","message":"\nAvoid long parameter lists.\n","line":258,"column":19,"endLine":260,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":258,"column":19,"endLine":260,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ExcessiveParameterList","category":"Design","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_design.html#excessiveparameterlist","message":"\nAvoid long parameter lists.\n","line":261,"column":19,"endLine":263,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":261,"column":19,"endLine":263,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ExcessiveParameterList","category":"Design","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_design.html#excessiveparameterlist","message":"\nAvoid long parameter lists.\n","line":264,"column":19,"endLine":266,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":264,"column":19,"endLine":266,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":267,"column":19,"endLine":269,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":270,"column":19,"endLine":272,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":273,"column":19,"endLine":275,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":276,"column":19,"endLine":278,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":279,"column":19,"endLine":281,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":282,"column":19,"endLine":284,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":285,"column":19,"endLine":287,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":288,"column":19,"endLine":290,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":291,"column":19,"endLine":293,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":294,"column":19,"endLine":296,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":297,"column":19,"endLine":299,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":300,"column":19,"endLine":302,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":303,"column":19,"endLine":305,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":306,"column":19,"endLine":308,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":309,"column":19,"endLine":311,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":312,"column":19,"endLine":314,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":315,"column":19,"endLine":317,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":318,"column":19,"endLine":320,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":321,"column":19,"endLine":323,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":324,"column":19,"endLine":326,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":327,"column":19,"endLine":329,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":330,"column":19,"endLine":332,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":333,"column":19,"endLine":335,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":336,"column":19,"endLine":338,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ExcessiveParameterList","category":"Design","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_design.html#excessiveparameterlist","message":"\nAvoid long parameter lists.\n","line":339,"column":19,"endLine":341,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":339,"column":19,"endLine":341,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ExcessiveParameterList","category":"Design","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_design.html#excessiveparameterlist","message":"\nAvoid long parameter lists.\n","line":342,"column":19,"endLine":344,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":342,"column":19,"endLine":344,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":345,"column":19,"endLine":347,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":348,"column":19,"endLine":350,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":351,"column":19,"endLine":353,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":354,"column":19,"endLine":356,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":357,"column":19,"endLine":359,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":360,"column":19,"endLine":362,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":363,"column":19,"endLine":365,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":366,"column":19,"endLine":368,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":369,"column":19,"endLine":371,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":372,"column":19,"endLine":374,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":375,"column":19,"endLine":377,"endColumn":6},{"engine":"pmd","fileName":"/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests/force-app/main/default/classes/SystemDatabase.cls","severity":3,"ruleName":"ApexDoc","category":"Documentation","url":"https://docs.pmd-code.org/pmd-doc-7.10.0/pmd_rules_apex_documentation.html#apexdoc","message":"\nMissing ApexDoc comment\n","line":378,"column":19,"endLine":380,"endColumn":6}];
+	// END - Placeholders filled in by the scanner
+
+	// Global DataTable displayed in the report
+	var dataTable = null;
+
+	// Color if the severity is greater than 5
+	const unknownSeverityColor = '#cccccc';
+
+	// Background colors for severity
+    // Palette from https://www.w3schools.com/colors/colors_palettes.asp
+    // TODO: Accessibility
+	function getSeverityColor(severity) {
+		switch (parseInt(severity)) {
+			case 1:
+				return '#d96459';
+			case 2:
+				return '#f2ae72';
+			case 3:
+				return '#f2e394';
+			case 4:
+				return '#588c7e';
+			case 5:
+				return '#96ceb4';
+			default:
+				return '#cccccc';
+		}
+	}
+
+	// Convert a map of severity->count to a structure consumable by the chart library
+	// options.labelFormatter: function(severity, count) that returns a label
+	function sevMapToChartData(sevMap, options) {
+		var dataset = {
+			data: [],
+			backgroundColor: []
+		};
+
+		var dataLabels = [];
+		// Sort the entries by key order
+		sevMap = new Map([...sevMap.entries()].sort());
+		for (var severity of sevMap.keys()) {
+			var count = sevMap.get(severity);
+			dataset.data.push(count);
+			dataset.backgroundColor.push(getSeverityColor(severity));
+			if (options && options.labelFormatter) {
+				dataLabels.push(options.labelFormatter(severity, count));
+			} else {
+				dataLabels.push(`Sev${severity}`);
+			}
+		}
+
+		return {
+			datasets: [dataset],
+			labels: dataLabels
+		};
+	}
+
+	// Creates a horizontal bar chart below a grouping of rows. Called
+	// asynchronously as the rows are added/removed by the search feature.
+	function populateRowGroupChart(id, summary) {
+		const ctx = $(`#${id}`);
+		if (!ctx.length) {
+			// This can happen when the user quickly types in the search field
+			return;
+		}
+
+		const data = sevMapToChartData(summary);
+
+		new Chart(ctx, {
+			type: 'horizontalBar',
+			data: data,
+			options: {
+				aspectRatio: 20,
+				animation: {
+					duration: 0
+				},
+				legend: {
+					display: false
+				},
+				scales: {
+                    xAxes: [{
+                        ticks: { beginAtZero: true }
+                    }]
+				}
+			},
+		});
+	}
+
+	function populateSummaryChart() {
+		// The number of files is determined by finding the number of row groupings
+		const numFiles = $('.dtrg-start').length;
+		var text = `${numFiles} File`;
+		if (numFiles !== 1) {
+			text += 's'
+		}
+		$('#summaryFiles').text(text);
+
+		// Number/type of violations is found by analyzing the visible data rows
+		var summary = new Map();
+		dataTable.rows({ search: 'applied' })
+			.data()
+			.pluck('severity')
+			.each(function (value, index) {
+				var count = summary.get(value);
+				count = count ? (count + 1) : 1;
+				summary.set(value, count);
+			});
+
+		// Calculate the total number of violations, independent of severity
+		const numViolations = Array.from(summary.values()).reduce((a, b) => a + b, 0);
+		text = `${numViolations} Violation`;
+		if (numViolations !== 1) {
+			text += 's'
+		}
+		$('#summaryViolations').text(text);
+
+		const data = sevMapToChartData(summary, {
+			labelFormatter: function(severity, count) {
+				return `Sev${severity} (${count})`;
+			}
+		});
+
+		// Create a new canvas, remove the previous canvas
+		const canvas = $('<canvas/>');
+		$('#summaryChart').empty().append(canvas);
+
+		new Chart(canvas, {
+			type: 'doughnut',
+			data: data,
+			options: {
+				aspectRatio: 6,
+				animation: {
+					duration: 0
+				},
+				legend: {
+					display: true,
+					position: 'bottom',
+					// Prevent a click from modifying the chart
+					onClick: (e) => e.stopPropagation(),
+					labels: {
+						fontSize: 18,
+						fontStyle: 'bold'
+					}
+				}
+			},
+		});
+	}
+
+	// Create a table where the first column(fileName) is hidden but used for grouping.
+	// Initial sort by fileName, severity, lineNumber
+	// fileName is used in orderFixed to force all results to sort underneath the fileName grouping
+	var rowSummaryIdCounter = 0;
+	$(document).ready(function () {
+		dataTable = $('#violations').DataTable({
+				columnDefs: [
+					{ 'visible': false, 'targets': [0] }
+				],
+				rowGroup: {
+					dataSrc: ['fileName'],
+					startRender: function (rows, group, level) {
+						return $('<tr>' +
+						`<td colspan="9">${group}</td>` +
+						'</tr>'
+						);
+					},
+					endRender: function (rows, group, level) {
+						var summary = new Map();
+
+						rows.data().pluck('severity').each( function(value, index) {
+							var count = summary.get(value);
+							count = count ? (count + 1) : 1;
+							summary.set(value, count);
+						});
+
+						const id = `summaryGroup${rowSummaryIdCounter++}`;
+						window.setTimeout(function() {
+							populateRowGroupChart(id, summary);
+						}, 0);
+						return $(
+						'<tr>' +
+						`<td colspan="9" class="summaryChartCell"><div class="summaryChartContainer"><canvas id="${id}"></canvas><div></td>` +
+						'</tr>');
+					}
+				},
+				orderFixed: [[0, 'asc']],
+				order: [[1, 'asc'], [6, 'asc']],
+				data: violations,
+				paging: false,
+				columns: [
+					{ data: 'fileName' },
+					{ data: 'severity', className: 'scannerSeverity' },
+					{ data: 'engine' },
+					{ data: 'category' },
+					{ data: 'ruleName',
+					    // Convert the ruleName to a hyperlink that displays the rule information
+						'render': function(data, type, row, meta){
+							if(data && type === 'display'){
+								data = '<a href="' + row.url + '" target="__blank">' + data + '</a>';
+							}
+							return data;
+						}
+					},
+					{ data: 'message' },
+					// 'defaultContent' provides information to the Datatables code in cases where the row
+					// corresponds to something non file location specific. i.e. a tsconfig.json error
+					{ data: 'line', className: 'scannerLocation', defaultContent: ''},
+					{ data: 'column', className: 'scannerLocation', defaultContent: ''},
+					{ data: 'endLine', className: 'scannerLocation', defaultContent: ''},
+					{ data: 'endColumn', className: 'scannerLocation', defaultContent: ''}
+				],
+				'rowCallback': function(row, data, index) {
+					var severity = data['severity'];
+					var bgColor = getSeverityColor(severity);
+					if (bgColor) {
+						$(row).find('td:eq(0)').css('background-color', bgColor);
+					}
+				},
+				'infoCallback': function( settings, start, end, max, total, pre ) {
+					window.setTimeout(function() {
+						populateSummaryChart();
+					}, 0);
+				}
+			});
+		});
+	</script>
+	<title>Salesforce Code Analyzer Report</title>
+</head>
+
+<body>
+    <h1 id="reportTitle">Salesforce Code Analyzer Report</h1>
+	<div id="summaryChart"></div>
+	<h4 id="summaryFiles"></h4>
+	<h4 id="summaryViolations"></h4>
+	<div class="fw-container">
+		<div class="fw-body">
+			<div class="content">
+				<table id="violations" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>File Name</th>
+							<th>Sev</th>
+							<th>Engine</th>
+							<th>Category</th>
+							<th>Rule Name</th>
+							<th>Message</th>
+							<th>Line</th>
+							<th>Column</th>
+							<th>End Line</th>
+							<th>End Column</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div>
+		<div id="footer">This report was generated with command <b><i>run</i></b> from working directory <b><i>/Users/lrz/GitHub/benjaminloerincz/sf-code-analyzer-tests</i></b></div>
+	</div>
+</body>
+
+</html>
